@@ -10,8 +10,10 @@ public class Conexion {
 
     // Realizo la conexión con la BD.
     public static void conexion() {
-        factory = HibernateUtil.getSessionFactory();
-        session = HibernateUtil.getSession();
+        if (factory == null) {
+            factory = HibernateUtil.getSessionFactory();
+            session = HibernateUtil.getSession();
+        }
     }
 
     // Desconecto de la BD

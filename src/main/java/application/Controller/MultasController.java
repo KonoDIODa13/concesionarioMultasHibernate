@@ -1,7 +1,9 @@
 package application.Controller;
 
+import application.CRUD.MultaCRUD;
 import application.Model.Coche;
 import application.Model.Multa;
+import application.Utils.Comprobaciones;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,9 +41,14 @@ public class MultasController implements Initializable {
     @FXML
     private TableColumn<Multa, String> tcIdentificador, tcPrecio, tcFecha;
 
+    MultaCRUD crud;
     Coche cocheSeleccionado = null;
     Multa multaSeleccionada = null;
     List<Multa> multas;
+
+    public MultasController() {
+        crud = new MultaCRUD();
+    }
 
     public void setCoche(Coche coche) {
         cocheSeleccionado = coche;
@@ -61,6 +69,17 @@ public class MultasController implements Initializable {
 
     @FXML
     public void insertarMulta(ActionEvent event) {
+        int identificador;
+        double precio;
+        LocalDate localdate;
+        if (Comprobaciones.compruebaInt(tvIdentificador.getText(), "identificador")) {
+            identificador = Integer.parseInt(tvIdentificador.getText());
+        }
+        if (Comprobaciones.compruebaDouble(tvPrecio.getText(), "precio")) {
+            precio = Double.parseDouble(tvPrecio.getText());
+        }
+        localdate = LocalDate.parse(dpFecha.toString());
+        System.out.println(localdate);
 
     }
 
@@ -84,5 +103,6 @@ public class MultasController implements Initializable {
 
         tvMultas.setItems(FXCollections.observableList(multas));
     }
+
 
 }

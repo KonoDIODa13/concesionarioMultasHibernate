@@ -43,8 +43,8 @@ public class CambioEscenas {
             newStage.setScene(new Scene(loader.load()));
 
             //El unico cambio respecto al cambio pantallas normal es que le paso el controller para poder pasarle parametros
-            MultasController modificarController = loader.getController();
-            modificarController.setCoche(coche);
+            MultasController controller = loader.getController();
+            controller.setCoche(coche);
 
             newStage.sizeToScene();
             newStage.show();
@@ -53,8 +53,13 @@ public class CambioEscenas {
             Stage currentStage = (Stage) rootPane.getScene().getWindow();
             currentStage.close();
 
-        } catch (IOException IOex) {
+            /*
+            catch (IOException IOex) {
             AlertUtils.mostrarError("Error al cargar el FXML");
+        }
+             */
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
