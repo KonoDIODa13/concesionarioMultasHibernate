@@ -23,7 +23,8 @@ public class CocheDAO implements CocheDAOImpl {
     */
     @Override
     public void desconectarBD() {
-        Conexion.desconectar();
+        factory.close();
+        session.close();
     }
 
     /*

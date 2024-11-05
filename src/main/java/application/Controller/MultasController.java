@@ -3,6 +3,7 @@ package application.Controller;
 import application.CRUD.MultaCRUD;
 import application.Model.Coche;
 import application.Model.Multa;
+import application.Utils.CambioEscenas;
 import application.Utils.Comprobaciones;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class MultasController implements Initializable {
+public class MultasController {
 
     @FXML
     private AnchorPane multasPane;
@@ -51,11 +52,11 @@ public class MultasController implements Initializable {
     }
 
     public void setCoche(Coche coche) {
+        System.out.println(coche);
         cocheSeleccionado = coche;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+        tvMatricula.setText(coche.getMatricula());
+        tvMatricula.setEditable(false);
+        tvMatricula.setDisable(true);
         cargarTabla();
         tcIdentificador.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
@@ -97,12 +98,15 @@ public class MultasController implements Initializable {
     public void seleccionarMulta(MouseEvent mouseEvent) {
     }
 
+    @FXML
+    public void salir(ActionEvent event) {
+        CambioEscenas.cambioEscena("concesionario.fxml", multasPane);
+    }
+
     public void cargarTabla() {
         tvMultas.getItems().clear();
         multas = crud.getMultas(cocheSeleccionado);
-
         tvMultas.setItems(FXCollections.observableList(multas));
     }
-
 
 }

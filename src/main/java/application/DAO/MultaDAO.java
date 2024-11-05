@@ -34,11 +34,11 @@ public class MultaDAO implements MultaDAOImpl {
 
     @Override
     public List<Multa> getMultas(Coche coche) {
+        System.out.println(coche);
         session.beginTransaction();
-        List<Multa> multasTotales = session.createQuery("from Multas").getResultList();
-        multasTotales.forEach(System.out::println);
+        List<Multa> multasTotales = session.createQuery("from Multa").getResultList();
         session.close();
-        return multasTotales.stream().filter(multa -> multa.getCoche() == coche).toList();
+        return multasTotales.stream().filter(multa -> multa.getMatricula().equalsIgnoreCase(coche.getMatricula())).toList();
     }
 
     @Override

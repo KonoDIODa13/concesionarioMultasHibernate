@@ -1,15 +1,17 @@
 package application.Model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "Coches")
-public class Coche {
+public class Coche implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "matricula")
     private String matricula;
 
@@ -21,6 +23,9 @@ public class Coche {
 
     @Column(name = "tipo")
     private String tipo;
+
+    @OneToMany(mappedBy = "matricula", cascade = CascadeType.ALL)
+    private List<Multa> multas;
 
     public Coche() {
     }

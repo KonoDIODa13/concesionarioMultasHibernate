@@ -1,6 +1,7 @@
 package application.Model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /*
@@ -12,7 +13,7 @@ id_multa integer unsigned NOT NULL AUTO_INCREMENT,
 
 @Entity
 @Table(name = "Multas")
-public class Multa {
+public class Multa implements Serializable {
     @Id
     @Column(name = "id_multa")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,17 +25,19 @@ public class Multa {
     @Column(name = "fecha")
     private LocalDate fecha;
 
-    @ManyToOne
+   /* @ManyToOne
     @JoinColumn(name = "matricula", referencedColumnName = "matricula")
-    private Coche coche;
+    */
+   @Column(name = "matricula")
+    private String matricula;
 
     public Multa() {
     }
 
-    public Multa(double precio, LocalDate fecha, Coche coche) {
+    public Multa(String matricula, double precio, LocalDate fecha) {
         this.precio = precio;
         this.fecha = fecha;
-        this.coche = coche;
+        this.matricula = matricula;
     }
 
     public int getId() {
@@ -61,12 +64,12 @@ public class Multa {
         this.fecha = fecha;
     }
 
-    public Coche getCoche() {
-        return coche;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public void setCoche(Coche coche) {
-        this.coche = coche;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     @Override
@@ -74,7 +77,7 @@ public class Multa {
         return "Multa{" +
                 ", precio=" + getPrecio() +
                 ", fecha=" + getFecha() +
-                ", matricula=" + getCoche() +
+                ", matricula=" + getMatricula() +
                 '}';
     }
 }
