@@ -14,8 +14,8 @@ public class MultaDAO implements MultaDAOImpl {
 
     public MultaDAO() {
         Conexion.conexion();
-        factory = Conexion.getFactory();
-        session = Conexion.getSession();
+            factory = Conexion.getFactory();
+            session = Conexion.getSession();
     }
 
     @Override
@@ -34,7 +34,6 @@ public class MultaDAO implements MultaDAOImpl {
 
     @Override
     public List<Multa> getMultas(Coche coche) {
-        System.out.println(coche);
         session.beginTransaction();
         List<Multa> multasTotales = session.createQuery("from Multa").getResultList();
         session.close();

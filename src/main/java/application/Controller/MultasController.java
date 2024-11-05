@@ -8,7 +8,6 @@ import application.Utils.Comprobaciones;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,10 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.net.URL;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 public class MultasController {
@@ -52,7 +49,6 @@ public class MultasController {
     }
 
     public void setCoche(Coche coche) {
-        System.out.println(coche);
         cocheSeleccionado = coche;
         tvMatricula.setText(coche.getMatricula());
         tvMatricula.setEditable(false);
@@ -70,23 +66,26 @@ public class MultasController {
 
     @FXML
     public void insertarMulta(ActionEvent event) {
-        int identificador;
-        double precio;
-        LocalDate localdate;
-        if (Comprobaciones.compruebaInt(tvIdentificador.getText(), "identificador")) {
-            identificador = Integer.parseInt(tvIdentificador.getText());
-        }
+        List<String> campos = new ArrayList<>();
+        /*if (ControllerUtils.compruebaInt(tvIdentificador.getText(), "identificador")) {
+            campos.add(tvIdentificador.getText());
+        }*/
+        campos.add(tvMatricula.getText());
         if (Comprobaciones.compruebaDouble(tvPrecio.getText(), "precio")) {
-            precio = Double.parseDouble(tvPrecio.getText());
+            campos.add(tvPrecio.getText());
         }
-        localdate = LocalDate.parse(dpFecha.toString());
-        System.out.println(localdate);
+        campos.add(dpFecha.getValue().toString());
 
+        crud.insertarMulta(campos);
+        limpiarCampos(event);
+        cargarTabla();
     }
 
     @FXML
     public void limpiarCampos(ActionEvent event) {
-
+        tvIdentificador.setText("");
+        tvPrecio.setText("");
+        dpFecha.setValue(null);
     }
 
     @FXML
