@@ -29,11 +29,13 @@ public class MultaCRUD implements MultaCRUDImpl {
 
     @Override
     public boolean insertarMulta(List<String> campos) {
-        String matricula = campos.getFirst();
+        Coche coche = null;
+        System.out.println(campos.getFirst());
+        //Coche coche = campos.getFirst();
         double precio = Double.parseDouble(campos.get(1));
         LocalDate localDate = LocalDate.parse(campos.getLast());
 
-        Multa multa = new Multa(matricula, precio, localDate);
+        Multa multa = new Multa(coche, precio, localDate);
 
         if (multas.contains(multa)) {
             AlertUtils.mostrarError("La multa ya esta en la bd.");

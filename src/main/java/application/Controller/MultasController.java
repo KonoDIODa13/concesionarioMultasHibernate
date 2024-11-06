@@ -34,7 +34,7 @@ public class MultasController {
 
 
     @FXML
-    private TextField tvIdentificador, tvPrecio, tvMatricula;
+    private TextField tvPrecio, tvMatricula;
 
     @FXML
     public TableView<Multa> tvMultas;
@@ -66,10 +66,8 @@ public class MultasController {
     @FXML
     public void insertarMulta(ActionEvent event) {
         List<String> campos = new ArrayList<>();
-        /*if (ControllerUtils.compruebaInt(tvIdentificador.getText(), "identificador")) {
-            campos.add(tvIdentificador.getText());
-        }*/
-        campos.add(tvMatricula.getText());
+
+        campos.add(cocheSeleccionado.toString());
         if (Comprobaciones.compruebaDouble(tvPrecio.getText(), "precio")) {
             campos.add(tvPrecio.getText());
         }
@@ -85,12 +83,7 @@ public class MultasController {
     @FXML
     public void modificarMulta(ActionEvent event) {
         List<String> campos = new ArrayList<>();
-        /*
-        if (ControllerUtils.compruebaInt(tvIdentificador.getText(), "identificador")) {
-            campos.add(tvIdentificador.getText());
-        }
-        */
-        // campos.add(tvMatricula.getText());
+
         if (Comprobaciones.compruebaDouble(tvPrecio.getText(), "precio")) {
             campos.add(tvPrecio.getText());
         }
@@ -137,7 +130,6 @@ public class MultasController {
 
     @FXML
     public void limpiarCampos(ActionEvent event) {
-        tvIdentificador.setText("");
         tvPrecio.setText("");
         dpFecha.setValue(null);
         multaSeleccionada = null;
@@ -151,7 +143,6 @@ public class MultasController {
     }
 
     public void cargarData() {
-        tvIdentificador.setText(String.valueOf(multaSeleccionada.getId()));
         tvPrecio.setText(String.valueOf(multaSeleccionada.getPrecio()));
         dpFecha.setValue(multaSeleccionada.getFecha());
     }

@@ -25,19 +25,18 @@ public class Multa implements Serializable {
     @Column(name = "fecha")
     private LocalDate fecha;
 
-   /* @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "matricula", referencedColumnName = "matricula")
-    */
-   @Column(name = "matricula")
-    private String matricula;
+    //@Column(name = "matricula")
+    private Coche coche;
 
     public Multa() {
     }
 
-    public Multa(String matricula, double precio, LocalDate fecha) {
+    public Multa(Coche coche, double precio, LocalDate fecha) {
         this.precio = precio;
         this.fecha = fecha;
-        this.matricula = matricula;
+        this.coche = coche;
     }
 
     public int getId() {
@@ -64,12 +63,12 @@ public class Multa implements Serializable {
         this.fecha = fecha;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public Coche getCoche() {
+        return coche;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setCoche(Coche coche) {
+        this.coche = coche;
     }
 
     @Override
@@ -77,7 +76,7 @@ public class Multa implements Serializable {
         return "Multa{" +
                 ", precio=" + getPrecio() +
                 ", fecha=" + getFecha() +
-                ", matricula=" + getMatricula() +
+                ", matricula=" + getCoche().getMatricula() +
                 '}';
     }
 }

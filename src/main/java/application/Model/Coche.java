@@ -24,7 +24,7 @@ public class Coche implements Serializable {
     @Column(name = "tipo")
     private String tipo;
 
-    @OneToMany(mappedBy = "matricula", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "coche", cascade = CascadeType.ALL)
     private List<Multa> multas;
 
     public Coche() {

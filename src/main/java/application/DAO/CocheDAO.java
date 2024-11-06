@@ -2,6 +2,7 @@ package application.DAO;
 
 import application.Conexion.Conexion;
 import application.Model.Coche;
+import application.Model.Multa;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -69,9 +70,9 @@ public class CocheDAO implements CocheDAOImpl {
     public void eliminarCoche(Coche coche) {
         try {
             session.beginTransaction();
-            //session.delete(coche);
-            coche.getMultas().forEach(System.out::println);
+            session.delete(coche);
             session.getTransaction().commit();
+            eliminaMultas(coche.getMultas());
 
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -97,6 +98,20 @@ public class CocheDAO implements CocheDAOImpl {
             session.clear();
         }
         return coches;
+    }
+
+    public void eliminaMultas(List<Multa> multas) {
+        try {
+            session.beginTransaction();
+            MultaDAO multaDAO = new MultaDAO();
+            multas.forEach(multaDAO::eliminarMulta);
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.clear();
+        }
     }
 
 }
