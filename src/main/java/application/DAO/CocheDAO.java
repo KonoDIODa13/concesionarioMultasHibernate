@@ -5,6 +5,7 @@ import application.Model.Coche;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CocheDAO implements CocheDAOImpl {
@@ -32,9 +33,16 @@ public class CocheDAO implements CocheDAOImpl {
     */
     @Override
     public void insertarCoche(Coche coche) {
-        session.beginTransaction();
-        session.save(coche);
-        session.getTransaction().commit();
+        try {
+            session.beginTransaction();
+            session.save(coche);
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.clear();
+        }
     }
 
     /*
@@ -42,9 +50,16 @@ public class CocheDAO implements CocheDAOImpl {
     */
     @Override
     public void modificarCoche(Coche coche) {
-        session.beginTransaction();
-        session.update(coche);
-        session.getTransaction().commit();
+        try {
+            session.beginTransaction();
+            session.update(coche);
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.clear();
+        }
     }
 
     /*
@@ -52,18 +67,17 @@ public class CocheDAO implements CocheDAOImpl {
     */
     @Override
     public void eliminarCoche(Coche coche) {
-        session.beginTransaction();
-        session.delete(coche);
-        session.getTransaction().commit();
-    }
+        try {
+            session.beginTransaction();
+            //session.delete(coche);
+            coche.getMultas().forEach(System.out::println);
+            session.getTransaction().commit();
 
-    /*
-    Busco un Coche según la matricula (realizara un: select * from Coche where matricula="?").
-    */
-    public Coche buscarCoche(int id) {
-        Coche coche;
-        coche = (Coche) session.get(Coche.class, id);
-        return coche;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.clear();
+        }
     }
 
     /*
@@ -71,7 +85,18 @@ public class CocheDAO implements CocheDAOImpl {
     */
     @Override
     public List<Coche> getCoches() {
-        return session.createQuery("from Coche").getResultList();
+        List<Coche> coches = new ArrayList<>();
+        try {
+            session.beginTransaction();
+            coches = session.createQuery("from Coche").getResultList();
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.clear();
+        }
+        return coches;
     }
 
 }

@@ -54,13 +54,13 @@ public class CocheCRUD implements CocheCRUDImpl {
         return true;
     }
 
-    public boolean modificarCoche(List<String> campos, Coche antiguoCoche) {
+    public boolean modificarCoche(List<String> campos, Coche coche) {
         /*
         Este metodo, al igual que el de insertar coche, compruebo los campos que voy a meter.
         Por último, llamamos al la función modificarCoche.
          */
         if (comprobaciones(campos)) return false;
-        Coche coche = dao.buscarCoche(antiguoCoche.getId());
+        //Coche coche = dao.buscarCoche(antiguoCoche.getId());
         coche.setMatricula(campos.get(0));
         coche.setMarca(campos.get(1));
         coche.setModelo(campos.get(2));

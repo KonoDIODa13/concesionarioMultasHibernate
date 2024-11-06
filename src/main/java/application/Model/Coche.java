@@ -77,6 +77,14 @@ public class Coche implements Serializable {
         this.modelo = modelo;
     }
 
+    public List<Multa> getMultas() {
+        return multas;
+    }
+
+    public void setMultas(List<Multa> multas) {
+        this.multas = multas;
+    }
+
     @Override
     public String toString() {
         return "Coche{" +

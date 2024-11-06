@@ -13,7 +13,7 @@ public interface MultaCRUDImpl {
 
     public boolean insertarMulta(List<String> campos);
 
-    public boolean modificarMulta(List<String> campos, Multa MultaPreCambios);
+    public boolean modificarMulta(List<String> campos, Multa multa);
 
     public void eliminarMulta(Multa multa);
 }

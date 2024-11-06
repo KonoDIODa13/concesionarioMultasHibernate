@@ -45,12 +45,18 @@ public class MultaCRUD implements MultaCRUDImpl {
     }
 
     @Override
-    public boolean modificarMulta(List<String> campos, Multa MultaPreCambios) {
-        return false;
+    public boolean modificarMulta(List<String> campos, Multa multa) {
+        double precio = Double.parseDouble(campos.getFirst());
+        LocalDate localDate = LocalDate.parse(campos.getLast());
+        multa.setPrecio(precio);
+        multa.setFecha(localDate);
+        dao.modificarMulta(multa);
+        return true;
     }
 
     @Override
     public void eliminarMulta(Multa multa) {
+        dao.eliminarMulta(multa);
 
     }
 }

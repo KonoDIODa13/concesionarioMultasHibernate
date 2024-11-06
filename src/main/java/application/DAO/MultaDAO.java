@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultaDAO implements MultaDAOImpl {
-    private final SessionFactory factory = Conexion.getFactory();
-    private final Session session = Conexion.getSession();
+    private final SessionFactory factory;
+    private final Session session;
 
     public MultaDAO() {
         Conexion.conexion();
+        factory = Conexion.getFactory();
+        session = Conexion.getSession();
     }
 
     @Override
@@ -35,30 +37,6 @@ public class MultaDAO implements MultaDAOImpl {
         } finally {
             session.clear();
         }
-    }
-
-    @Override
-    public List<Multa> getMultas(Coche coche) {
-        try {
-            session.beginTransaction();
-            List<Multa> multasTotales = session.createQuery("from Multa").getResultList();
-            session.getTransaction().commit();
-
-            List<Multa> multas = new ArrayList<>();
-            multasTotales.forEach(multa -> {
-                if (multa.getMatricula().equalsIgnoreCase(coche.getMatricula()))
-                    multas.add(multa);
-            });
-            // me devuelve una lista inmodificable, por eso peta después
-            //multas = multasTotales.stream().filter(multa -> multa.getMatricula().equalsIgnoreCase(coche.getMatricula())).toList();
-            return multas;
-
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.clear();
-        }
-        return null;
     }
 
     @Override
@@ -87,5 +65,29 @@ public class MultaDAO implements MultaDAOImpl {
         } finally {
             session.clear();
         }
+    }
+
+    @Override
+    public List<Multa> getMultas(Coche coche) {
+        List<Multa> multas = new ArrayList<>();
+
+        try {
+            session.beginTransaction();
+            List<Multa> multasTotales = session.createQuery("from Multa").getResultList();
+            session.getTransaction().commit();
+
+            multasTotales.forEach(multa -> {
+                if (multa.getMatricula().equalsIgnoreCase(coche.getMatricula()))
+                    multas.add(multa);
+            });
+            // me devuelve una lista inmodificable, por eso peta después
+            //multas = multasTotales.stream().filter(multa -> multa.getMatricula().equalsIgnoreCase(coche.getMatricula())).toList();
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.clear();
+        }
+        return multas;
     }
 }
