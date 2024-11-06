@@ -3,6 +3,7 @@ package application.Controller;
 import application.CRUD.MultaCRUD;
 import application.Model.Coche;
 import application.Model.Multa;
+import application.Utils.AlertUtils;
 import application.Utils.CambioEscenas;
 import application.Utils.Comprobaciones;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +36,16 @@ public class MultasController {
     private TextField tvIdentificador, tvPrecio, tvMatricula;
 
     @FXML
-    public TableView tvMultas;
+    public TableView<Multa> tvMultas;
 
     @FXML
-    private TableColumn<Multa, String> tcIdentificador, tcPrecio, tcFecha;
+    private TableColumn<Multa, Integer> tcIdentificador;
+
+    @FXML
+    private TableColumn<Multa, Double> tcPrecio;
+
+    @FXML
+    private TableColumn<Multa, LocalDate> tcFecha;
 
     MultaCRUD crud;
     Coche cocheSeleccionado = null;
@@ -76,9 +84,11 @@ public class MultasController {
         }
         campos.add(dpFecha.getValue().toString());
 
-        crud.insertarMulta(campos);
-        limpiarCampos(event);
-        cargarTabla();
+        if (crud.insertarMulta(campos)) {
+            AlertUtils.mostrarConfirmacion("Multa creada correctamente.");
+            cargarTabla();
+            limpiarCampos(event);
+        }
     }
 
     @FXML
@@ -105,7 +115,9 @@ public class MultasController {
     public void cargarTabla() {
         tvMultas.getItems().clear();
         multas = crud.getMultas(cocheSeleccionado);
+
         tvMultas.setItems(FXCollections.observableList(multas));
+
     }
 
 }

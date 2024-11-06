@@ -131,7 +131,7 @@ public class CocheController implements Initializable {
     void mostrarMultas(ActionEvent event) {
         if (cocheSeleccionado != null) {
             CambioEscenas.cambioEscena("multas.fxml", concesionario, cocheSeleccionado);
-            crud.desconectar();
+            //crud.desconectar();
         } else {
             AlertUtils.mostrarError("Seleccione primero el coche");
         }

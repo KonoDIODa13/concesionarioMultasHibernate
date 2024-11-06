@@ -14,12 +14,6 @@ public class Conexion {
         session = HibernateUtil.getSession();
     }
 
-    // Desconecto de la BD
-    public static void desconectar() {
-        factory.close();
-        session.close();
-    }
-
     //retorno la sesionFactory
     public static SessionFactory getFactory() {
         return factory;
