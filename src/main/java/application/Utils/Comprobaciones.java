@@ -19,6 +19,18 @@ public class Comprobaciones {
         return true;
     }
 
+    static public boolean compruebaFecha(String localdate, String campo) {
+        // pattern para comprobar si es una fecha.
+        //String datePattern = "^\\d{4}-\\d{2}-\\d{2}$";
+        if (compruebaVacio(localdate, campo)) {
+            if (!localdate.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
+                AlertUtils.mostrarError("El campo " + campo + "no es valido como fecha.");
+                return false;
+            }
+        }
+        return true;
+    }
+
     static public boolean compruebaVacio(String str, String campo) {
         if (str.isEmpty()) {
             AlertUtils.mostrarError("No has rellenado nada en el campo " + campo);

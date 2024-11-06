@@ -66,14 +66,11 @@ public class MultasController {
     @FXML
     public void insertarMulta(ActionEvent event) {
         List<String> campos = new ArrayList<>();
-
-        campos.add(cocheSeleccionado.toString());
-        if (Comprobaciones.compruebaDouble(tvPrecio.getText(), "precio")) {
             campos.add(tvPrecio.getText());
-        }
+
         campos.add(dpFecha.getValue().toString());
 
-        if (crud.insertarMulta(campos)) {
+        if (crud.insertarMulta(cocheSeleccionado, campos)) {
             AlertUtils.mostrarConfirmacion("Multa creada correctamente.");
             cargarTabla();
             limpiarCampos(event);
