@@ -19,7 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import javax.swing.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,13 +59,12 @@ public class MultasController {
         tcIdentificador.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         tcFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        //coche.getMultas().forEach(System.out::println);
     }
 
     @FXML
     public void insertarMulta(ActionEvent event) {
         List<String> campos = new ArrayList<>();
-            campos.add(tvPrecio.getText());
+        campos.add(tvPrecio.getText());
 
         campos.add(dpFecha.getValue().toString());
 
@@ -79,19 +77,24 @@ public class MultasController {
 
     @FXML
     public void modificarMulta(ActionEvent event) {
-        List<String> campos = new ArrayList<>();
+        if (multaSeleccionada != null) {
+            List<String> campos = new ArrayList<>();
 
-        if (Comprobaciones.compruebaDouble(tvPrecio.getText(), "precio")) {
-            campos.add(tvPrecio.getText());
-        }
-        campos.add(dpFecha.getValue().toString());
+            if (Comprobaciones.compruebaDouble(tvPrecio.getText(), "precio")) {
+                campos.add(tvPrecio.getText());
+            }
+            campos.add(dpFecha.getValue().toString());
 
-        if (crud.modificarMulta(campos, multaSeleccionada)) {
-            AlertUtils.mostrarConfirmacion("Multa modificada correctamente.");
-            cargarTabla();
-            limpiarCampos(event);
+            if (crud.modificarMulta(campos, multaSeleccionada)) {
+                AlertUtils.mostrarConfirmacion("Multa modificada correctamente.");
+                cargarTabla();
+                limpiarCampos(event);
+            }
+        } else {
+            AlertUtils.mostrarError("Seleccione primero una multa");
         }
     }
+
 
     @FXML
     public void borrarMulta(ActionEvent event) {
